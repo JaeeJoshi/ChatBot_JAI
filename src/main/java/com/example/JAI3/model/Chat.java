@@ -3,18 +3,24 @@ package com.example.JAI3.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.bridge.Message;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Chat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
     private String username;
 
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
 
     public Chat() {
@@ -49,6 +55,6 @@ public class Chat {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
-    
 
+    
 }

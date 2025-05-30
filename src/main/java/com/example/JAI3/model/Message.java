@@ -10,24 +10,25 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Message {
 
-    @Id@GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+   
     private Long id;
+    private String content;
+    private String role; // "USER" or "BOT"
+    
+@ManyToOne
+@JoinColumn(name="chat_it")
+private Chat chat;
 
-    private String Content;
-    private String role; //"User" or "BOT"
+public Message() {
+}
 
-    @ManyToOne
-    @JoinColumn(name="chat_id")
-    private Chat chat;
-
-    public Message() {
-    }
-
-    public Message(Long id, String content, String role, Chat chat) {
-        this.id = id;
-        Content = content;
-        this.role = role;
+    public Message(Chat chat, String content, Long id, String role) {
         this.chat = chat;
+        this.content = content;
+        this.id = id;
+        this.role = role;
     }
 
     public Long getId() {
@@ -39,11 +40,11 @@ public class Message {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
     public String getRole() {
@@ -61,7 +62,6 @@ public class Message {
     public void setChat(Chat chat) {
         this.chat = chat;
     }
+    
 
-    
-    
 }

@@ -1,33 +1,41 @@
-package com.example.JAI3.Config;
+package com.example.JAI3.config;
+
+//port java.beans.Customizer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+//port org.springframework.security.core.userdetails.User;
+//port org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+////rt org.springframework.security.config.annotation.web.configurers.Customizer;
 
 
 @Configuration
 public class SecurityConfig {
 
-
     @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.withUsername("user")
+    public UserDetailsService userDetailsService() {
+        @SuppressWarnings("unused")
+        var user = User.withUsername("user")
                 .password("{noop}password")
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        return new InMemoryUserDetailsManager();
     }
 
-    public SecurityFilterChain securityFilteChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth .anyRequest().authenticated()).httpBasic(Customizer.withDefaults());
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().authenticated()
+            )
+            .httpBasic(Customizer.withDefaults());
 
-            return http.build();
+        return http.build();
     }
 }
