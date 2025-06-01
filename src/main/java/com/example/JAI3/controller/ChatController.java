@@ -3,8 +3,8 @@ package com.example.JAI3.controller;
 //import org.apache.el.stream.Optional;
 import java.util.Optional;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class ChatController {
     @PostMapping("/start")
     public Chat startNewChat(Authentication auth){
         Chat chat = new Chat();
-        chat.setUsername(auth.name());
+        chat.setUsername(auth.getName());
         return chatRepository.save(chat);
     }
 
@@ -37,7 +37,7 @@ public class ChatController {
     public String askQuestion(@RequestBody AskRequest request, Authentication auth){
         Optional<Chat> chatOpt = chatRepository.findById(request.chatId);
 
-        if (chatOpt.isEmpty() || !chatOpt.get().getUsername().equals(auth.name())) {
+        if (chatOpt.isEmpty() || !chatOpt.get().getUsername().equals(auth.getName())) {
             return "Invalid chat ID or unauthorized access.";
     }
 

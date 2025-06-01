@@ -3,8 +3,6 @@ package com.example.JAI3.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aspectj.bridge.Message;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
